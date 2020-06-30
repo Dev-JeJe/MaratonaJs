@@ -1,8 +1,9 @@
 //responsavel pela autenficicacao
 const express = require('express');
 const bcrypt = require('bcrypt');//biblioteca de criptografia
-const {accountSignUp} = require('../validators/account');
-const {getMessage} = require('../helpers/validator');
+const { accountSignUp, accountSignIn } = require('../validators/account');
+const { getMessage } = require('../helpers/validator');
+const { generateJwt, generateRefreshJwt } = require('../helpers/jwt');
 const { Account } = require('../models');
 /*
     esse const é referente as seguintes lines
@@ -17,11 +18,24 @@ const router = express.Router();
 
 const saltRounds = 10; //auxilio para criptografar
 
-router.get('/sign-in', (req, res) => {
-    return res.jsonOK(null);
+router.post('/sign-in', accountSignIn, async (req, res) => {
+    const {email, password} = req.body;
+    const account = await Account.findOne({where: { email }});
+    /*  
+        para não repetir o if, criou um ternário no match para ver se o account tem o password
+        if(!account) return res.jsonBadRequest(null, getMessage('account.signin.invalid'));
+    */
+    const match = account ? bcrypt.compareSync(password, account.password) : null; //validando senha
+
+    if (!match) return res.jsonBadRequest(null, getMessage('account.signin.invalid'));
+
+    const token = generateJwt({id: account.id});
+    const refreshToken = generateRefreshJwt({id: account.id});
+
+    return res.jsonOK(account, getMessage('account.signin.success'), {token, refreshToken});
 });//router for login
 
-router.get('/sign-up', accountSignUp , async (req, res) => {
+router.post('/sign-up', accountSignUp , async (req, res) => {
     /*
         como a ideia é utilizar o accountSignUp como um middleware de validação o ideal e colocalo na requisição 
         do sign-up para ele validar antes da requisição ocorrer
@@ -58,8 +72,10 @@ router.get('/sign-up', accountSignUp , async (req, res) => {
      .catch() → Error
      nessa aplicação utilizamos um JS mais moderno com o async e o await
     */
+    const token = generateJwt({id: newAccount.id});
+    const refreshToken = generateRefreshJwt({id: newAccount.id});
 
-    return res.jsonOK(newAccount, getMessage('account.signup.success'));
+    return res.jsonOK(newAccount, getMessage('account.signup.success'), {token, refreshToken});
 });//router for register
 
 module.exports = router; //permiter exportar o router
