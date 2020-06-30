@@ -1,7 +1,15 @@
 const express = require('express');
-
+const authController = require('./controllers/auth');
 const app = express();
 
+
+app.use('/auth', authController);
+/* 
+tendo o authController, as rotas exportadas, agora precisa apontar para o express usando app.use()
+    com isso as rotas ficam dessa forma:
+        → /auth/sign-in
+        → /auth/sign-up
+*/
 app.get('/', (req, res)=>{
     return res.json('API running...');
 });
