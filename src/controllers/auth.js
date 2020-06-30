@@ -33,7 +33,7 @@ router.get('/sign-up', async (req, res) => {
     /*
         verificar se o email já existe no banco
     */
-    if(account) return res.json('Account already exists');
+    if(account) return res.jsonBadRequest(null, 'Account already exists');
 
     const hash = bcrypt.hashSync(password, saltRounds);
     /*
@@ -52,7 +52,7 @@ router.get('/sign-up', async (req, res) => {
      nessa aplicação utilizamos um JS mais moderno com o async e o await
     */
 
-    return res.json(newAccount);
+    return res.jsonOK(newAccount);
 });//router for register
 
 module.exports = router; //permiter exportar o router
