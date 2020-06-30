@@ -1,3 +1,4 @@
+const { getMessage } = require('../helpers/messages');
 const TYPE_JSON = 'application/json'; //facilita utilizar em outros lugares
 const STATUS_CODE_OK = 200; //não é uma boa pratica deixar o status direto no response
 const STATUS_CODE_BAD_REQUEST = 400;
@@ -14,7 +15,7 @@ const jsonOK = function(data, message, metadata){
         ? se for verdadeiro isso
         : se não isso;
     */
-    message = (message) ? message: 'Successful request.';
+    message = (message) ? message: getMessage('response.json_ok');
     metadata = (metadata) ? metadata: {};
 
     this.status(status);
@@ -29,7 +30,7 @@ const jsonBadRequest = function(data, message, metadata){
         ? se for verdadeiro isso
         : se não isso;
     */
-    message = (message) ? message: 'Bad Request';
+    message = (message) ? message: getMessage('response.json_bad_request');
     metadata = (metadata) ? metadata: {};
 
     this.status(status);
@@ -44,7 +45,7 @@ const jsonUnauthorized = function(data, message, metadata){
         ? se for verdadeiro isso
         : se não isso;
     */
-    message = (message) ? message: 'Unauthorized.';
+    message = (message) ? message: getMessage('response.json_unauthorized');
     metadata = (metadata) ? metadata: {};
 
     this.status(status);
@@ -59,7 +60,7 @@ const jsonNotFound = function(data, message, metadata){
         ? se for verdadeiro isso
         : se não isso;
     */
-    message = (message) ? message: 'Not founded.';
+    message = (message) ? message: getMessage('response.json_not_found');
     metadata = (metadata) ? metadata: {};
 
     this.status(status);
@@ -74,7 +75,7 @@ const jsonServerError = function(data, message, metadata){
         ? se for verdadeiro isso
         : se não isso;
     */
-    message = (message) ? message: 'Server Error.';
+    message = (message) ? message: getMessage('response.json_server_error');
     metadata = (metadata) ? metadata: {};
 
     this.status(status);

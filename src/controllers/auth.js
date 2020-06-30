@@ -1,6 +1,8 @@
 //responsavel pela autenficicacao
 const express = require('express');
 const bcrypt = require('bcrypt');//biblioteca de criptografia
+const {accountSignUp} = require('../validators/account');
+const {getMessage} = require('../helpers/validator');
 const { Account } = require('../models');
 /*
     esse const é referente as seguintes lines
@@ -16,10 +18,15 @@ const router = express.Router();
 const saltRounds = 10; //auxilio para criptografar
 
 router.get('/sign-in', (req, res) => {
-    return res.json('Sign in');
+    return res.jsonOK(null);
 });//router for login
 
-router.get('/sign-up', async (req, res) => {
+router.get('/sign-up', accountSignUp , async (req, res) => {
+    /*
+        como a ideia é utilizar o accountSignUp como um middleware de validação o ideal e colocalo na requisição 
+        do sign-up para ele validar antes da requisição ocorrer
+    */
+    
     /*
         o app.use(express.urlencoded({ extended: false})); possibilita a utilização do req
         const {email, password} = req.body; → está linha resumo essas 3:
@@ -33,7 +40,7 @@ router.get('/sign-up', async (req, res) => {
     /*
         verificar se o email já existe no banco
     */
-    if(account) return res.jsonBadRequest(null, 'Account already exists');
+    if(account) return res.jsonBadRequest(null, getMessage('account.signup.email_exist'));
 
     const hash = bcrypt.hashSync(password, saltRounds);
     /*
@@ -52,7 +59,7 @@ router.get('/sign-up', async (req, res) => {
      nessa aplicação utilizamos um JS mais moderno com o async e o await
     */
 
-    return res.jsonOK(newAccount);
+    return res.jsonOK(newAccount, getMessage('account.signup.success'));
 });//router for register
 
 module.exports = router; //permiter exportar o router
