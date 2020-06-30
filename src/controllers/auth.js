@@ -20,11 +20,22 @@ router.get('/sign-in', (req, res) => {
 });//router for login
 
 router.get('/sign-up', async (req, res) => {
-    const email = 'jeffycordan@gmail.com';
-    const password = '123456';
+    /*
+        o app.use(express.urlencoded({ extended: false})); possibilita a utilização do req
+        const {email, password} = req.body; → está linha resumo essas 3:
+        const body = req.body;
+        const email = body.email;
+        const password = body.password;
+    */
+    const {email, password} = req.body;
+
+    const account = await Account.findOne({where: { email }}); //como retorna uma promise pode ser usado o await
+    /*
+        verificar se o email já existe no banco
+    */
+    if(account) return res.json('Account already exists');
 
     const hash = bcrypt.hashSync(password, saltRounds);
-    console.log(hash);
     /*
         a biblioteca bcrypt tem a function hash e hashSync.
         nesse caso utilizaremos a hashSync que pede os seguintes parametros:
@@ -32,7 +43,7 @@ router.get('/sign-up', async (req, res) => {
             → saltOrRounds : uma string que aceita letras e numeros para auxiliar na criptografia
     */
 
-    const result = await Account.create({email , password :hash });
+    const newAccount = await Account.create({email , password :hash });
     //salva no db
     /*
      o Account.create() retorna uma promise:
@@ -41,7 +52,7 @@ router.get('/sign-up', async (req, res) => {
      nessa aplicação utilizamos um JS mais moderno com o async e o await
     */
 
-    return res.json(result);
+    return res.json(newAccount);
 });//router for register
 
 module.exports = router; //permiter exportar o router

@@ -5,6 +5,8 @@ const authController = require('./controllers/auth');
 
 const app = express();
 
+app.use(express.json()); // receber os dados em json
+app.use(express.urlencoded({ extended: false})); //pra pegar o body da requisição e entender
 
 app.use('/auth', authController);
 /* 
