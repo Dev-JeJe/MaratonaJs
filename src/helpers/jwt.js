@@ -19,7 +19,6 @@ const verifyJwt = (token) => {
 
 /* functions para gerar e verificar o refresh jwt */
 const generateRefreshJwt = (payload) =>{
-    console.log('generateRefreshJwt:', payload)
     return jwt.sign(payload, refreshTokenPrivateKey, refreshOptions);
 };
 
@@ -27,4 +26,12 @@ const verifyRefreshJwt = (token) => {
     return jwt.verify(token, refreshTokenPrivateKey);
 };
 
-module.exports = {generateJwt, generateRefreshJwt, verifyJwt, verifyRefreshJwt};
+const getTokenFromHeaders = (headers) => {
+    //esse jwt será passado em todas as requisições, num header 'authorization'
+    const token = headers['authorization'];
+
+    //o token, por default, chega com 7 caracteres não relacionados a ele, então utilizasse o slice para cortar  
+    return token ? token.slice(7, token.length) : null ;
+};
+
+module.exports = {generateJwt, generateRefreshJwt, verifyJwt, verifyRefreshJwt, getTokenFromHeaders};

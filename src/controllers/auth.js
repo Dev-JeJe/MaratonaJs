@@ -3,7 +3,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');//biblioteca de criptografia
 const { accountSignUp, accountSignIn } = require('../validators/account');
 const { getMessage } = require('../helpers/validator');
-const { generateJwt, generateRefreshJwt } = require('../helpers/jwt');
+const { generateJwt, generateRefreshJwt, getTokenFromHeaders, verifyRefreshJwt } = require('../helpers/jwt');
 const { Account } = require('../models');
 /*
     esse const é referente as seguintes lines
@@ -77,5 +77,33 @@ router.post('/sign-up', accountSignUp , async (req, res) => {
 
     return res.jsonOK(newAccount, getMessage('account.signup.success'), {token, refreshToken});
 });//router for register
+
+router.post('/refresh', async (req, res) =>{
+    const token = getTokenFromHeaders(req.headers);
+    /*
+        function criada para substituir as seguintes lines:
+            → let token = req.headers['authorization'];
+            → token = token ? token.slice(7, token.length) : null ;
+    */
+    
+    if (!token) return res.jsonUnauthorized(null, 'Invalid token');
+
+    try{
+        const decoded = verifyRefreshJwt(token);
+        const account = await Account.findByPk(decoded.id); //Pk → Primary Key
+        if (!account)  return res.jsonUnauthorized(null, 'Invalid token');
+
+        if(decoded.version != account.jwtVersion) return res.jsonUnauthorized(null, 'Invalid token');
+
+        const meta = {
+            token : generateJwt({id: account.id}),
+        }
+
+        return res.jsonOK(null, null, meta);
+
+    }catch(error){
+        return res.jsonUnauthorized(null, 'Invalid token');
+    }
+});//router for refreshToken
 
 module.exports = router; //permiter exportar o router
