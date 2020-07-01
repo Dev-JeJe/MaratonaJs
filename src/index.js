@@ -3,6 +3,7 @@ const db = require('./models');
 const response = require('./middlewares/response');
 
 const authController = require('./controllers/auth');
+const linkController = require('./controllers/link');
 
 const app = express();
 
@@ -12,12 +13,14 @@ app.use(express.json()); // receber os dados em json
 app.use(express.urlencoded({ extended: false})); //pra pegar o body da requisição e entender
 
 app.use('/auth', authController);
-/* 
-tendo o authController, as rotas exportadas, agora precisa apontar para o express usando app.use()
+/*
+    tendo o authController, as rotas exportadas, agora precisa apontar para o express usando app.use()
     com isso as rotas ficam dessa forma:
-        → /auth/sign-in
-        → /auth/sign-up
+    → /auth/sign-in
+    → /auth/sign-up
 */
+app.use('/link', linkController);
+
 app.get('/', (req, res)=>{
     return res.json('API running...');
 });
