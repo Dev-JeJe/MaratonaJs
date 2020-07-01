@@ -6,7 +6,7 @@ const router = express.Router();
 
 /* List links */
 router.get('/', async (req, res) => {
-    const accountId = 1;
+    const { accountId } = req;
     const links = await Link.findAll({where: {accountId}});
 
 
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 /* Get a link by Id */
 router.get('/:id', async (req, res) =>{
-    const accountId = 1;
+    const { accountId } = req;
     const { id }  = req.params;
     
     const link = await Link.findOne({where: {id, accountId}}) //nesse where por ser a variavel e o campo com o mesmo nome (id:id) pode deixar apenas 1 de cada
@@ -26,8 +26,8 @@ router.get('/:id', async (req, res) =>{
 
 /* Create a link */
 router.post('/', async (req, res) => {
-    const accountId = 2; // com a implementação do middleware de token essa variável terá o valor recebido de (req.id)
-    const {label, url, isSocial} = req.body;
+    const { accountId, body } = req; // com a implementação do middleware de token essa variável terá o valor recebido de (req.id)
+    const {label, url, isSocial} = body;
 
     const image = 'https://google.com/image.jpg';
 
@@ -38,9 +38,9 @@ router.post('/', async (req, res) => {
 
 /* Update a link */
 router.put('/:id', async (req, res) =>{
-    const accountId = 1; // com a implementação do middleware de token essa variável terá o valor recebido de (req.id → foreignKey = accountId)
+    const { accountId , body } = req; // com a implementação do middleware de token essa variável terá o valor recebido de (req.id → foreignKey = accountId)
     const { id }  = req.params; //para pegar o (:id) da requisição (id da table link)
-    const { body } = req; // por não estar utilizando as váriaveis {label, url, isSocial}, renomeio elas para ficar menos poluido
+    //const { body } = req; por não estar utilizando as váriaveis {label, url, isSocial}, renomeio elas para ficar menos poluido
 
     const fields = ['label', 'url', 'isSocial']; //campos que irei/posso alterar
 
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res) =>{
 
 /* Delete a link by Id*/
 router.delete('/:id', async (req, res) =>{
-    const accountId = 1;
+    const { accountId } = req;
     const { id }  = req.params;
     const link = await Link.findOne({where: {id, accountId}})
     if(!link) return res.jsonNotFound();

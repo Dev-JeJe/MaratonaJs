@@ -26,4 +26,4 @@ const verifyRefreshJwt = (token) => {
     return jwt.verify(token, refreshTokenPrivateKey);
 };
 
-module.exports = {generateJwt, generateRefreshJwt};
+module.exports = {generateJwt, generateRefreshJwt, verifyJwt, verifyRefreshJwt};
