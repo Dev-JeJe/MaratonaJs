@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 
 const Layout = ({children}/* prop*/) => {
     /* const {children = prop}*/
