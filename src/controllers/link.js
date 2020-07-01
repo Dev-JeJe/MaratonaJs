@@ -26,9 +26,9 @@ router.get('/:id', async (req, res) =>{
 
 /* Create a link */
 router.post('/', async (req, res) => {
-    const { accountId, body } = req; // com a implementação do middleware de token essa variável terá o valor recebido de (req.id)
+    const { accountId , body } = req; // com a implementação do middleware de token essa variável terá o valor recebido de (req.id)
     const {label, url, isSocial} = body;
-
+    console.log(req.id);
     const image = 'https://google.com/image.jpg';
 
     const link = await Link.create({ label, url, isSocial, image, accountId })

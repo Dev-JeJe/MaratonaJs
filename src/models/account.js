@@ -9,7 +9,12 @@ module.exports = (sequelize, DataTypes) =>{
             type: DataTypes.STRING,
             allowNull : false,
         },
-    })
+        jwtVersion : { // gerenciador de versão do refreshToken
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
+        }
+    });
 
     Account.associate = (models) => {
         Account.hasMany(models.Link, {foreignKey: 'accountId'});

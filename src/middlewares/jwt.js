@@ -11,15 +11,17 @@ const checkJwt = (req, res, next) => {
     //(!!) → muda a varivável para boolean
     if (isExcluded) return next(); //se for um path que não precise de validação de token
 
-    console.log(path, isExcluded);
+    //console.log(path, isExcluded);
     //esse jwt será passado em todas as requisições, num header 'authorization'
     let token = req.headers['authorization'];
+    
     token = token ? token.slice(7, token.length) : null ;
     /*
         o token, por default, chega com 7 caracteres não relacionados a ele, então utilizasse o slice para cortar
     */
 
     //verificação do token
+    //console.log('Token: ', token);
     if (!token) return res.jsonUnauthorized(null, 'Invalid token');
 
     try{

@@ -19,6 +19,7 @@ const verifyJwt = (token) => {
 
 /* functions para gerar e verificar o refresh jwt */
 const generateRefreshJwt = (payload) =>{
+    console.log('generateRefreshJwt:', payload)
     return jwt.sign(payload, refreshTokenPrivateKey, refreshOptions);
 };
 

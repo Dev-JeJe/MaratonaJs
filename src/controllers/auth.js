@@ -30,7 +30,7 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
     if (!match) return res.jsonBadRequest(null, getMessage('account.signin.invalid'));
 
     const token = generateJwt({id: account.id});
-    const refreshToken = generateRefreshJwt({id: account.id});
+    const refreshToken = generateRefreshJwt({id: account.id, version: account.jwtVersion});
 
     return res.jsonOK(account, getMessage('account.signin.success'), {token, refreshToken});
 });//router for login
@@ -73,7 +73,7 @@ router.post('/sign-up', accountSignUp , async (req, res) => {
      nessa aplicação utilizamos um JS mais moderno com o async e o await
     */
     const token = generateJwt({id: newAccount.id});
-    const refreshToken = generateRefreshJwt({id: newAccount.id});
+    const refreshToken = generateRefreshJwt({id: newAccount.id, version: newAccount.jwtVersion});
 
     return res.jsonOK(newAccount, getMessage('account.signup.success'), {token, refreshToken});
 });//router for register
