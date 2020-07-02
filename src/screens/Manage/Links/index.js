@@ -16,7 +16,7 @@ const Links = ({ links, linkList }) => {
                     <h1>Links</h1>
                 </div>
                 <div className="col text-right align-self-bottom pt-2">
-                    <Link to="/Manage/Links/Create" className="btn btn-primary">Add</Link>
+                    <Link to="/manage/links/create" className="btn btn-primary">Add</Link>
                 </div>
             </div>
             { links && links.length ? links.map((link) => {

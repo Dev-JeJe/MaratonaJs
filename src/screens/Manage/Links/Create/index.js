@@ -16,9 +16,6 @@ const Create = ({linkCreate, link}) => {
         linkCreate(data);
     };
 
-    
-    console.log('###Create.link', link);
-
     return (
         <Layout>
             <h1>Create Link</h1>
