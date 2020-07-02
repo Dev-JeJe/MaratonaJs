@@ -1,8 +1,9 @@
-import {apiPost, apiPut, apiGet} from '../helpers/api';
+import {apiPost, apiPut, apiGet, apiDelete} from '../helpers/api';
 
 export const LINK_TO_REMOVE = 'LINK_TO_REMOVE';
 export const LINK_CREATE = 'LINK_CREATE';
 export const LINK_UPDATE = 'LINK_UPDATE';
+export const LINK_REMOVE = 'LINK_REMOVE';
 export const LINK_LIST = 'LINK_LIST';
 export const LINK_GET = 'LINK_GET';
 
@@ -32,4 +33,9 @@ export const linkList = (data) => {
 
 export const setLinkToRemove = (link) => {
     return {type: LINK_TO_REMOVE, payload: link };
+};
+
+export const linkRemove = (link) => {
+    const payload = apiDelete(`/link/${link.id}`);
+    return {type: LINK_REMOVE, payload};
 };
