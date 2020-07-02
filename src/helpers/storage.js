@@ -10,7 +10,7 @@ const defaultOptions = {
 export const getCookie = (name, options) => {
     if(!name) return null;
 
-    return cookie.get(name, {...defaultOptions, ...options}); //o que é spred
+    return cookie.get(name, {...defaultOptions, ...options}); //o que é spread
 };
 
 export const setCookie = (name, value, options) => {
