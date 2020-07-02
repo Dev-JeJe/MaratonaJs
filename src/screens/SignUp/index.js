@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';// esse connect será para mapear os estados que vierem do store como propriedade do SignUp
 import { signUp } from './SignUpActions';
 
 const SignUp = (props) => {
-
+    const {signUp} = props;
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -13,6 +13,10 @@ const SignUp = (props) => {
         const data = Object.fromEntries(formData);
         
         signUp(data);
+    };
+
+    if(account){
+        return <Redirect to="/manage/links"/>
     }
 
     return (
