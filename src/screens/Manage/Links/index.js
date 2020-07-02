@@ -16,7 +16,7 @@ const Links = ({ links, linkList }) => {
                     <h1>Links</h1>
                 </div>
                 <div className="col text-right align-self-bottom pt-2">
-                    <Link to="/Manage/Links/create" className="btn btn-primary">Add</Link>
+                    <Link to="/Manage/Links/Create" className="btn btn-primary">Add</Link>
                 </div>
             </div>
             { links && links.length ? links.map((link) => {
@@ -28,7 +28,9 @@ const Links = ({ links, linkList }) => {
                         <span className="text-primary clearfix">{link.url}</span>
                     </div>
                     <div className="ml-auto p-2 clearfix">
-                        <span>Edit</span>
+                        <Link to={`/manage/links/edit/${link.id}`}> 
+                            Edit
+                        </Link>
                         <span>Delete</span>
                     </div>
                 </div>

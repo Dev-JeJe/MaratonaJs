@@ -14,7 +14,7 @@ export const getCookie = (name, options) => {
 };
 
 export const setCookie = (name, value, options) => {
-    if (!name || value == undefined) return null;
+    if (!name || value === undefined) return null;
     cookie.set(name, value, {...defaultOptions, ...options});
     return true;
 };
