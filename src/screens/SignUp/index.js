@@ -3,14 +3,13 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';// esse connect será para mapear os estados que vierem do store como propriedade do SignUp
 import { signUp } from '../../actions/AccountActions';
+import { getFormData } from '../../helpers/form';
 
 const SignUp = (props) => {
     const {account, signUp} = props;
     const submitHandler = (e) => {
         e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData);
+        const data = getFormData(e);
         
         signUp(data);
     };
@@ -44,8 +43,8 @@ const SignUp = (props) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state) => {
     return {account: state.account.account}; //esse return é com base no store.js

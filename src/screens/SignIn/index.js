@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux'; // esse connect será para mapear os estados que vierem do store como propriedade do SignIn
 import { signIn } from '../../actions/AccountActions';
+import { getFormData } from '../../helpers/form'
 
 const SignIn = (props) => {
     const {account, signIn} = props;
@@ -11,14 +12,11 @@ const SignIn = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData);
+        const data = getFormData(e);
     
         signIn(data);
     }
-
-    console.log('***SignIn.account', account);
+    
     return (
         <div className="container h-100 pt-5">
             <h1>Sign In</h1>
@@ -42,8 +40,8 @@ const SignIn = (props) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state) => {
     return {account: state.account.account};
