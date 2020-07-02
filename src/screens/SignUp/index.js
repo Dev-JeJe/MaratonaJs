@@ -5,7 +5,7 @@ import { connect } from 'react-redux';// esse connect será para mapear os estad
 import { signUp } from './SignUpActions';
 
 const SignUp = (props) => {
-    const {signUp} = props;
+    const {account, signUp} = props;
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -15,9 +15,7 @@ const SignUp = (props) => {
         signUp(data);
     };
 
-    if(account){
-        return <Redirect to="/manage/links"/>
-    }
+    if(account) return <Redirect to="/manage/links"/>;
 
     return (
         <div className="container h-100 pt-5">
