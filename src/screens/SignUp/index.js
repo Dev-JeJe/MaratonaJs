@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';// esse connect será para mapear os estados que vierem do store como propriedade do SignUp
-import { signUp } from './SignUpActions';
+import { signUp } from '../../actions/AccountActions';
 
 const SignUp = (props) => {
     const {account, signUp} = props;
@@ -48,7 +48,7 @@ const SignUp = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    return {account: state.signUp.account};
+    return {account: state.account.account}; //esse return é com base no store.js
 };
 
 export default connect(mapStateToProps, {signUp})(SignUp);
