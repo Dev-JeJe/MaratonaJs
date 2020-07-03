@@ -2,12 +2,13 @@
     uma action ela é uma função que retorna um objeto de duas propriedade o type e o payload
     → payload: na implementação será uma promise de uma req ajax feita pela API
 */
-import {apiPost} from '../helpers/api';
+import {apiPost, apiRefreshToken} from '../helpers/api';
 
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const INIT_ACCOUNT = 'INIT_ACCOUNT';
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 
 export const signUp = (data) => {
     const payload = apiPost('/auth/sign-up', data);
@@ -26,4 +27,9 @@ export const signOut = (data) => {
 
 export const initAccount = () => {
     return {type: INIT_ACCOUNT, payload: {}};
+};
+
+export const getFreshToken = () => {
+    const payload = apiRefreshToken();
+    return {type: REFRESH_TOKEN, payload};
 };

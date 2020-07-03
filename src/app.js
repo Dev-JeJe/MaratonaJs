@@ -1,7 +1,7 @@
 //aplicação para o ReactDOM
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'; //componentes do react router dom
+import {BrowserRouter, Switch, Route} from 'react-router-dom'; //componentes do react router dom
 
 import Home from './screens/Home';
 import SignIn from './screens/SignIn';
@@ -21,15 +21,6 @@ const App = ({ initAccount }) => {
     return (
         <BrowserRouter>
             <div>
-                <nav>
-                    <ul className="list-group list-group-horizontal"/* aqui eu crio os links */> 
-                        <li className="list-group-item"> <Link to="/sign-in"> Sing In </Link> </li>
-                        <li className="list-group-item"> <Link to="/sign-up"> Sing Up </Link> </li>
-                        <li className="list-group-item"> <Link to="/manage/links/create"> Create Link </Link> </li>
-                        <li className="list-group-item"> <Link to="/manage/links/edit"> Edit Link </Link> </li>
-                        <li className="list-group-item"> <Link to="/manage/links"> Links </Link> </li>
-                    </ul>
-                </nav>
                 <Switch /* aqui é onde o link se redireciona */>
                     <Route path="/sign-in"><SignIn/></Route>
                     <Route path="/sign-up"><SignUp/></Route>

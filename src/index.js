@@ -7,6 +7,13 @@ import store from './store';
 import App from './App';
 
 import './styles/main.scss';
+import TokenRefresher from './components/TokenRefresher';
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root')); //renderiza o que precisar na div root na pasta public
+ReactDOM.render(
+<Provider store={store}>
+    <TokenRefresher/>
+    <App />
+    </Provider>,
+    document.getElementById('root')
+); //renderiza o que precisar na div root na pasta public
 
