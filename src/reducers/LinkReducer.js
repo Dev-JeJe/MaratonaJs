@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
             return {...state, linkToRemove: payload};
         }
         case LINK_REMOVE:{
-            const response = payload ? payload.data : null;
+            //const response = payload ? payload.data : null;
             const links = state.links.filter(link => link.id !== state.linkToRemove.id);
             return {...state, linkToRemove: null, links};
         }
