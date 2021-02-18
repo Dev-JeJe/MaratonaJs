@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import store from './store';
 
-import App from './App';
+import App from './app';
 
 import './styles/main.scss';
 import TokenRefresher from './components/TokenRefresher';
